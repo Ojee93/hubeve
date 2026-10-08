@@ -1,37 +1,36 @@
-import dotenv from "dotenv";
-import session from "express-session";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
 // import { createClient } from "redis";
-import express, { Express } from "express";
+const express_1 = __importDefault(require("express"));
 // import morgan from "morgan";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // import { assignSession, headerAuth, verifySseToken } from "./middleware";
-import { authRoutes, cronRoutes, sseTokenRoutes, streamRoutes } from "./routes";
+// import { authRoutes, cronRoutes, sseTokenRoutes, streamRoutes } from "./routes";
 // import { sseTokenAuth } from "./middleware";
 // import {redisClient } from "./lib";
-
-dotenv.config({ path: ".env.local" });
-
-export const app: Express = express();
-
+dotenv_1.default.config({ path: ".env.local" });
+exports.app = (0, express_1.default)();
 // CORS configuration
 const corsOptions = {
-  origin: `${process.env.ORIGIN}`,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ["Authorization", "Content-Type"],
-  "Access-Control-Allow-Credentials": true,
-  credentials: true,
-  optionsSuccessStatus: 204,
+    origin: `${process.env.ORIGIN}`,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Authorization", "Content-Type"],
+    "Access-Control-Allow-Credentials": true,
+    credentials: true,
+    optionsSuccessStatus: 204,
 };
-
 const session_secret = process.env.SESSION_SECRET || "";
-
-app.set("trust proxy", 1);
+exports.app.set("trust proxy", 1);
 // Enable CORS with the above options
-app.use(cors(corsOptions));
-
-app.use(express.json());
-app.use(cookieParser());
+exports.app.use((0, cors_1.default)(corsOptions));
+exports.app.use(express_1.default.json());
+exports.app.use((0, cookie_parser_1.default)());
 // app.use(
 //   session({
 //     name: "sid",
@@ -53,9 +52,7 @@ app.use(cookieParser());
 // );
 // app.use(assignSession);
 // app.use(morgan("dev"));
-
-app.disable("x-powered-by");
-
+exports.app.disable("x-powered-by");
 // app.use("/v1/auth", headerAuth, authRoutes);
 // app.use("/v1/ssetoken", sseTokenAuth, sseTokenRoutes);
 // app.use("/v1/cron", cronRoutes);

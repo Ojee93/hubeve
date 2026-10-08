@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 import mongoose from "mongoose";
 import { app as server } from "./app";
@@ -9,6 +9,8 @@ async function start() {
     "<username>": process.env.DATABASE_USER,
     "<password>": process.env.DATABASE_PASSWORD,
   };
+
+  // const DB = "mongodb+srv://afolabiojee_db_user:lc9QS40BrGtqZ6gi@cluster0.oqehea8.mongodb.net/hubeve?retryWrites=true&w=majority&appName=Cluster0";
 
   const DB = (process.env.DATABASE_URI || "").replace(
     /<username>|<password>/gi,
